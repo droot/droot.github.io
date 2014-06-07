@@ -9,11 +9,9 @@ Copyright: [John Boston][2]
 
 I couldn't have asked for better picture for my blog entry. I am going to use [John's words][3] straight from this photo page on flicker to set the ground for today's blog post.
 
-{% blockquote %}
 > This server was destroyed in the Choteau fire in NE Oklahoma on 11/27. This is why I stress to my clients the need for off-site backups. That's a telephone on top.
 >
 > Any small business owners out there should ask themselves "What would I do tomorrow if none of my data was retrievable". The answer in many cases is "I'd go out of business". Backups are cheap insurance, and if you don't store them off-site, you will regret it one day. Even taking yesterday's tape home with you is better than leaving it at the office.
-{% endblockquote %}
 
 Offsite back is much needed (checkout real example the [ma.gnolia disaster][4]) and everyone writes their own mechanism to take offsite backup. Last week, I spent sometime developing a simple mechanism of taking snapshot of certain section of database. We are using MongoDB at work. Though we have all the real-time replication mechanism in place but we wanted to take offsite backup for some section of user data in another place and we decided to go with [Amazon S3 service][5]. I thought of shareing some of the code snippets here because I think there are lot of foIks who could make use of this and save their time.  So, rest of the blog discusses steps for backing up data from MongoDB, storing it to Amazon S3 store and then restoring back from Amazon S3.
 
