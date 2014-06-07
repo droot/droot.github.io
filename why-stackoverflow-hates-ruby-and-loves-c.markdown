@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why StackOverFlow hates Ruby and Loves C#"
-date: 2014-08-07 21:20:23
+date: 2010-05-13 21:20:23
 ---
 
 No wonder why stackoverflow folks decide to go with [C#][1], the answer is simple because C# is going to make lot of money for them :) and it works really hard for them.
@@ -9,6 +9,11 @@ No wonder why stackoverflow folks decide to go with [C#][1], the answer is simpl
 If you are interested in economics of programming languages with StackOverFlow, you are going to find this one amusing.
 
 An hour back, just out of curiosity I thought of checking out popularity of programming languages on stackoverflow. I was looking for simple representative figures to compare engagement value of programming lanugages on stackoverflow. The simplest I could think of was 'Number of Questions tagged to each language'. I chose four languages:
+
+  - Python
+  - Ruby
+  - Java
+  - C#
 
 For the simplcity, let assume that each question for a language asked on Stackoverflow generates 1 USD (I know in the long run, value of each question will be way over 1USD as it will increase over time...but lets keep it 1 USD fixed), then here are some interesting economics that each programming language creates for StackOverFlow.
 
