@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Displaying date in user friendly format in Python"
-date: 2014-08-07 21:20:23
+date: 2010-04-25 21:20:23
 ---
 
 In this post, I am going to share a quick piece of code for a functionality which I think is required in almost every web application these days i.e. displaying date format in more user friendly format. Every application has objects in the system which have time-stamps associated with them i.e. user objects will have creation time or last activity time or a content publishing system will have content publishing time.
@@ -15,6 +15,7 @@ relativedelta(date1, date2) function in dateutil.relativedelta returns a relativ
 Now you can jump on to the code directly. If you have any questions, you can contact me at [@_sunil_][3]
 
 The Code
+{% gist 378448 %}
 
 [1]: http://farm5.static.flickr.com/4066/4550702755_af2fe77e0b_o.jpg
 [2]: http://labix.org/python-dateutil "python-dateutil"
