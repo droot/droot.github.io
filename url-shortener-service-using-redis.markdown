@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "URL Shortener Service Using Redis"
-date: 2014-08-07 21:20:23
+date: 2010-01-06 21:20:23
 ---
 
 I have been following ['Redis'][1] from sometime and got an opportunity to use it in one of the weekend projects (URL Shortner). I had a great experience using Redis in the project, so thought of writing a blog entry describing some aspect of the project to demonstrate a use case for Redis.
@@ -43,71 +43,62 @@ Now lets look at the basic functions of the URL shortner core module.
 
 1\. Shorten function of our module will look something like this. Given a long_url, this function generates the short-url-key which can be distributed to outside world. e.g. for <http://www.xyz.com/..>. ==> 3e8 as above, short-url = <http://ab.ly/3e8>
 
->     def shorten(self, long_url=None):
->
->         url_hash = '%x' % self.r.incr('next.url.id') #hex value of the counter
->
->         #next we store the long_url against this hex key
->
->         self.r.set('url:%s:id' % url_hash, long_url)
->
->         #push this new short url in global list of urls 
->
->         self.r.push('global:urls', url_hash)
->
->         return url_hash 
+{% highlight python %}
+  def shorten(self, long_url=None):
+    url_hash = '%x' % self.r.incr('next.url.id') #hex value of the counter
+    #next we store the long_url against this hex key
+    self.r.set('url:%s:id' % url_hash, long_url)
+    #push this new short url in global list of urls
+    self.r.push('global:urls', url_hash)
+    return url_hash 
+{% endhighlight %}
 
 2\. Expand function is required by the service to resolve a short URL needed for redirection when a user visits the short url. So expand function will look like this:
 
->     def expand(self, url_hash = None):
->
->         return self.r.get('url:%s:id' % url_hash) 
+{% highlight python %}
+  def expand(self, url_hash = None):
+    return self.r.get('url:%s:id' % url_hash) 
+{% endhighlight %}
 
     3. When someone visits a short URL, then we need a function to record the visit information (e.g IP address, user agent, http referrer etc). Here is what visit function will look like:
 
->     def visit(self, url_hash = None, ip_addr = None, agent = None, referrer = None):
->
->             #create an object of Visitor type
->
->             visitor = Visitor(ip_addr, agent, referrer)
->
->             #push the visitor object in the visitor list of this short URL
->
->             self.r.push('visitors:%s:url' % url_hash, json.dumps(visitor))
->
->             #increments the clicks of the short url
->
->             return self.r.incr(clicks:%s:url % url_hash)
+{% highlight python %}
+  def visit(self, url_hash = None, ip_addr = None, agent = None, referrer = None):
+    #create an object of Visitor types
+    visitor = Visitor(ip_addr, agent, referrer)
+    #push the visitor object in the visitor list of this short URL
+    self.r.push('visitors:%s:url' % url_hash, json.dumps(visitor))
+    #increments the clicks of the short url
+    return self.r.incr(clicks:%s:url % url_hash)
+{% endhighlight %}
 
 Please note that we would have wanted the above two operations to be atomic. but I realized very soon that they do not have any side effect if they are performed in an interleaved fasion. 
 
 4\. In order to find out the click count of a short URL, the code will be very simple as:
 
->     def clicks(self, url_hash = None):
->
->         return self.r.get(self.URL_CLICKS_KEY % url_hash)
->
->  
+{% highlight python %}
+  def clicks(self, url_hash = None):
+    return self.r.get(self.URL_CLICKS_KEY % url_hash)
+{% endhighlight %}
 
 5\. In order to list down the recent 100 visitors of a given short URL, the function will look like this:
 
->     def recent_visitors(self, url_hash = None):
->
->             visitors = []
->
->             for v in self.r.lrange('visitors:%s:url' % url_hash, 0, 100):
->
->                 visitors.append(json.loads(v))
->
->             return visitors 
+{% highlight python %}
+  def recent_visitors(self, url_hash = None):
+    visitors = []
+    for v in self.r.lrange('visitors:%s:url' % url_hash, 0, 100):
+      visitors.append(json.loads(v))
+    return visitors 
+{% endhighlight %}
 
 Please note above, as we were storing visitor info object in JSON format, we need to convert back in to python object.        
 
 6\. In order to view recent 100 short urls in the system, another helper function in the module will look something like this:
 
->     def short_urls(self):
->
->         return self.r.lrange('global:urls', 0 , 100)
+{% highlight python %}
+  def short_urls(self):
+    return self.r.lrange('global:urls', 0 , 100)
+{% endhighlight %}
 
 So a web application on top of this core module can be written to power up URL Shortening web service. I will share the core module on github after giving some final touches and will share the link. 
 
