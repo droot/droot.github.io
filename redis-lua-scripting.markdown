@@ -4,7 +4,7 @@ title: "Redis Lua Scripting - Violet Hill"
 date: 2011-06-18 21:20:23
 ---
 
-![][1] [Redis][2] is one of my favorite data storage platform and I won't miss a single chance to use it wherever I can. One of the biggest strengths of Redis has been that you can define your data modelling in the most natural form like key-value/hashes/lists/sets. I prefer thinking of data storage in form of list, hashes, sets instead of tables :).
+[Redis][2] is one of my favorite data storage platform and I won't miss a single chance to use it wherever I can. One of the biggest strengths of Redis has been that you can define your data modelling in the most natural form like key-value/hashes/lists/sets. I prefer thinking of data storage in form of list, hashes, sets instead of tables :).
 
 Redis provides a very good set of APIs(commands) which pretty much allows majority of the operations you would like to perform on these data types in a single command. 
 
@@ -28,7 +28,9 @@ I started with simple goal of implementing two new commands zpop and zrevpop for
 1. ZPOP: This will allow popping out element with lowest score from a sorted set.
 2. ZREVPOP: This will allow popping out element with highest score from a sorted set.
 
+
 ## Setup
+
 Follow these steps to get scripting version of Redis running on your machine.
 
 {% highlight bash %}
@@ -49,6 +51,7 @@ val = redis.call('zrange', KEYS[1], 0, 0)
 if val then redis.call('zremrangebyrank', KEYS[1], 0, 0) end
 return val
 {% endhighlight %}
+
 
 ## Testing
 
