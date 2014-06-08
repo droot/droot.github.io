@@ -4,7 +4,7 @@ highlighter:      pygments
 pygments:         true
 
 # Permalinks
-permalink:        pretty
+permalink:        /:title/
 
 # Setup
 title:            Violet Hill 
