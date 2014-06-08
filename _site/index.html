@@ -10,7 +10,7 @@
 
   <title>
     
-       &middot; 
+      Sunil Arora &middot; Sunil Arora
     
   </title>
 
@@ -34,8 +34,10 @@
     <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1></h1>
-      <p class="lead"></p>
+      <!--<h1>Sunil Arora</h1>-->
+      <img src="/public/profile_pic.jpg">
+      </img>
+      <p class="lead">Sunil Arora</p>
     </div>
 
     <ul class="sidebar-nav">
@@ -53,12 +55,28 @@
       
         
           
-            <li class="sidebar-nav-item">
-              <a href="/about.html">About</a>
-            </li>
+            <!--<li class="sidebar-nav-item">-->
+              <!--<a href="/about.html">About</a>-->
+            <!--</li>-->
           
         
       
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
         
       
         
@@ -66,12 +84,13 @@
         
       
 
-      <li class="sidebar-nav-item"><a href="/archive/v.zip">Download</a></li>
-      <li class="sidebar-nav-item"><a href="">GitHub project</a></li>
-      <li class="sidebar-nav-item">Currently v</li>
+      <!--<li class="sidebar-nav-item"><a href="https://github.com/poole/hyde/archive/v2.0.0.zip">Download</a></li>-->
+      <!--<li class="sidebar-nav-item"><a href="https://github.com/poole/hyde">GitHub project</a></li>-->
+      <li class="sidebar-nav-item"><a href="https://twitter.com/_sunil_">Twitter</a></li>
+      <!--<li class="sidebar-nav-item">Currently v2.0.0</li>-->
     </ul>
 
-    <p>&copy; 2014. All rights reserved.</p>
+    <!--<p>&copy; 2014. All rights reserved.</p>-->
   </div>
 </div>
 
@@ -79,11 +98,236 @@
     <div class="content container">
       <div class="posts">
   
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/scala-future-concurrent-download-example/">
+        Scala Concurrent Downloader example using Future
+      </a>
+    </h1>
+
+    <span class="post-date">08 Apr 2014</span>
+
+    <p>I spent this weekend learning more about Scala Futures, and believe me, posts
+below are the best written introductory posts about scala futures and promises.</p>
+
+<ul>
+<li><a href="http://danielwestheide.com/blog/2013/01/09/the-neophytes-guide-to-scala-part-8-welcome-to-the-future.html">Guide to Scala Future</a></li>
+<li><a href="http://danielwestheide.com/blog/2013/01/16/the-neophytes-guide-to-scala-part-9-promises-and-futures-in-practice.html">Guide to Scala Promise and Future</a></li>
+</ul>
+
+<p>In order to learn it for real, I started with an exercise of building a concurrent URL downloader.
+Basically idea is, let say, given n urls, how do you download n urls concurrently. </p>
+
+<div class="highlight"><pre><code class="scala"><span class="k">import</span> <span class="nn">play.api.libs.ws._</span> <span class="c1">//We are using WebService Client from Play&#39;s framework</span>
+<span class="k">import</span> <span class="nn">scala.concurrent._</span>
+<span class="k">import</span> <span class="nn">java.util.concurrent.Executors</span>
+<span class="k">import</span> <span class="nn">scala.util.</span><span class="o">{</span><span class="nc">Success</span><span class="o">,</span> <span class="nc">Failure</span><span class="o">,</span> <span class="nc">Try</span><span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">ConcurrentDownloader</span> <span class="o">{</span>
+
+    <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+
+   <span class="c1">//Future need an execution context for running them</span>
+      <span class="k">val</span> <span class="n">executorService</span> <span class="k">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="n">newFixedThreadPool</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+      <span class="k">implicit</span> <span class="k">val</span> <span class="n">executionContext</span> <span class="k">=</span> <span class="nc">ExecutionContext</span><span class="o">.</span>
+                            <span class="n">fromExecutorService</span><span class="o">(</span><span class="n">executorService</span><span class="o">)</span>
+      
+      <span class="c1">//lets define set of URLs to be downloaded</span>
+      <span class="k">val</span> <span class="n">urls</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://yahoo.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://bing.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://jskdlsycds.com&quot;</span><span class="o">,</span> <span class="c1">//invalid url-1</span>
+                      <span class="s">&quot;http://amazon.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://hackerne.ws&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://firstpost.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://rediff.com&quot;</span><span class="o">,</span>
+                      <span class="s">&quot;http://wowslskdleodd.com&quot;</span><span class="o">)</span> <span class="c1">//invalid url-2</span>
+
+     <span class="c1">//Here is how we create the future for each URLs</span>
+     <span class="c1">//execution context will run start fetching the URLs in the background</span>
+      <span class="k">val</span> <span class="n">futures</span> <span class="k">=</span> <span class="n">urls</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">url</span> <span class="k">=&gt;</span> <span class="nc">WS</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="n">url</span><span class="o">).</span><span class="n">get</span><span class="o">()</span> <span class="o">}</span>
+
+    <span class="c1">//This is a nice little trick to ensure convert a future of T to future of</span>
+    <span class="nc">Try</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+      <span class="k">def</span> <span class="n">futureToFutureTry</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">f</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">Try</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span> <span class="k">=</span>
+              <span class="n">f</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="nc">Success</span><span class="o">(</span><span class="k">_</span><span class="o">)).</span><span class="n">recover</span> <span class="o">{</span> <span class="k">case</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="nc">Failure</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">}</span>
+
+      <span class="k">val</span> <span class="n">futureListOfTrys</span> <span class="k">=</span> <span class="n">futures</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">futureToFutureTry</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
+
+     <span class="c1">//This is way to combine all those future into a single future</span>
+      <span class="k">val</span> <span class="n">fseq</span> <span class="k">=</span> <span class="nc">Future</span><span class="o">.</span><span class="n">sequence</span><span class="o">(</span><span class="n">futureListOfTrys</span><span class="o">)</span>
+
+      <span class="n">fseq</span> <span class="n">onComplete</span> <span class="o">{</span>
+          <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">l</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+              <span class="k">var</span> <span class="n">sCount</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="k">var</span> <span class="n">fCount</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="n">l</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
+                      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">resp</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+                          <span class="n">sCount</span> <span class="o">+=</span> <span class="mi">1</span> 
+                          <span class="n">println</span><span class="o">(</span><span class="s">&quot;status....=%s&quot;</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="o">))</span>
+                      <span class="o">}</span>
+                      <span class="k">case</span> <span class="nc">Failure</span><span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+                          <span class="n">fCount</span> <span class="o">+=</span> <span class="mi">1</span>
+                          <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;failure $t&quot;</span><span class="o">)</span>
+                      <span class="o">}</span>
+              <span class="o">}</span>
+              <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;success=$sCount, failures=$fCount&quot;</span><span class="o">)</span>
+          <span class="o">}</span>
+          <span class="k">case</span> <span class="nc">Failure</span><span class="o">(</span><span class="n">ex</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+              <span class="n">println</span><span class="o">(</span><span class="s">&quot;failure&quot;</span><span class="o">)</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>There you go, you have a nice little concurrent URL downloader. I am so glad to
+write a concurrent program without involving any threads, locks, shared data
+structures, feels so refreshing!</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/learning-scala-my-experience-and-advice/">
+        Learning Scala -- my experience and advice
+      </a>
+    </h1>
+
+    <span class="post-date">13 Dec 2013</span>
+
+    <p>Learning a new programming language has been on my list quite sometime and fortunately, I got a chance to try out Scala for one of the projects at work a month back. So, its been a month learning Scala now. Though its too early to form an opinion about it, but I must say, it has NOT been an easy language to learn so far.  And I think one of the reasons for that is -- the language is way too expressive with pretty much all the constructs in the basket and that makes it a very powerful tool but a difficult one to master. So one advice, don&#39;t get disappointed if you feel lost and be patient while you are learning it because it is going to take a bit longer than you expected, so hang in there!!!</p>
+
+<p>As I am on this journey, I am discovering some useful resources everyday, so I thought of documenting them in a blog post. I plan to maintain this blog post as a living document.</p>
+
+<h3>Books: </h3>
+
+<p>If you are looking for a quick introduction to the language, I would recommend <a href="http://www.amazon.com/Scala-Impatient-Cay-S-Horstmann/dp/0321774094/ref=sr_1_1?ie=UTF8&amp;qid=1387653919&amp;sr=8-1&amp;keywords=scala+for+impatient">&quot;Scala for Impatient&quot;</a> by Cay S. Horstmann. It is well written book with right balance of content explaining key concepts and their application. But if you are in for a long and patient read, <a href="http://www.amazon.com/Programming-Scala-Comprehensive-Step---Step/dp/0981531644/ref=sr_1_1?ie=UTF8&amp;qid=1387654246&amp;sr=8-1&amp;keywords=Programming+in+scala">&quot;</a><a href="http://www.amazon.com/Programming-Scala-Comprehensive-Step---Step/dp/0981531644/ref=sr_1_1?ie=UTF8&amp;qid=1387654246&amp;sr=8-1&amp;keywords=Programming+in+scala">Programming in Scala</a><a href="http://www.amazon.com/Programming-Scala-Comprehensive-Step---Step/dp/0981531644/ref=sr_1_1?ie=UTF8&amp;qid=1387654246&amp;sr=8-1&amp;keywords=Programming+in+scala">&quot;</a> by Martin Odersky is a good read which explains the key concepts on a much more fundamental and detailed level. I am using both the books  and cross reference depending upon the details I want to dive in to a particular topic. I am yet to explore other books, but these two makes a good start. The good thing is that both of them are available in kindle version.</p>
+
+<h3>Video Lectures: </h3>
+
+<p>If you like attending video course, then there is a very good course <a href="https://www.coursera.org/course/progfun" title="Link: https://www.coursera.org/course/progfun">&quot;Functional Programming Principles in Scala&quot;</a>  by Martin Odersky on Coursera. The course is divided in to video lectures of 10-20 minutes length, which makes them easy to consume.</p>
+
+<h3>Blogs/Online Articles: </h3>
+
+<p>There are some really useful blog post out there about scala, but a few deserve special mention here.</p>
+
+<ul>
+<li>Blog series called <a href="http://danielwestheide.com/scala/neophytes.html">“The Neophyte’s Guide to Scala”</a> by Daniel Westheide</li>
+<li><a href="http://www.scala-lang.org/documentation/">Scala Documentation</a> </li>
+<li><a href="http://twitter.github.io/scala_school/">Twitter Scala School</a></li>
+<li><a href="http://twitter.github.io/effectivescala/">Effective Scala</a></li>
+</ul>
+
+<h3>Tooling: </h3>
+
+<p>Eclipse and IntelliJ Idea, both of them, have a good support for scala. In my case, I end up using IntelliJ for my day to day coding, but eclipse has a very good support for Scala worksheet, which I find really handy to try and learn new concepts. For some reason, scala worksheets does not work in IntelliJ Idea. I also use Vim for some quick editing etc and I found vim-scala plugin pretty handy.</p>
+
+<p>Let me know what has been your experience learning Scala and chime in with links to resources which you found useful.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/drake-make-for-data/">
+        Drake - Make for Data!!!
+      </a>
+    </h1>
+
+    <span class="post-date">13 Sep 2013</span>
+
+    <p>Very recently, I started my journey in big data world and its exciting time to see new technologies popping up these days. I came across this really handy tool which I used in my project at work. Its called <a href="https://github.com/Factual/drake" title="Link: https://github.com/Factual/drake">Drake</a>, Make for Data as factual folks call it. You can read more about it in their <a href="http://blog.factual.com/introducing-drake-a-kind-of-make-for-data">blog post</a> . </p>
+
+<p>I will write up a detailed post about how I used Drake to simplify my life at work but in the mean time, I wanted to share this very good introductory video by <a href="http://www.youtube.com/user/aboytsov?feature=watch">Artem Boytsov</a> the author himself.</p>
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/BUgxmvpuKAs"
+frameborder="0" allowfullscreen></iframe>
+
+<p>I would highly recommend it to anyone to add it to his toolkit if you are dealing with complex data workflows in your project. Have a look and let me know what you think!!!</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/jquery-deferred-objects-an-example-usecase/">
+        Asynchronous IF implementation using JQuery Deferred Objects
+      </a>
+    </h1>
+
+    <span class="post-date">25 Feb 2012</span>
+
+    <p>I ran in to a situation in a project recently where I got an opportunity to use <a href="http://api.jquery.com/category/deferred-object/">JQuery Deferred Objects</a>. I wanted to implement an Async IF operation. Async IF operation is like watching a condition to become true (may be in future) and then invoking something when it becomes true. So this is essentially an &quot;if&quot; operation in async mode and your logic might involve watching more than one condition to be met.</p>
+
+<p>For example:</p>
+
+<p>Consider a <a href="http://droot.github.com/async_if/">demo web application</a> where colored boxes (red or green) can appear on the screen depending on some logic or user action. We want to do certain things if a red box appears or a green box appears or both of them appears.</p>
+
+<p>Let say we we want to do something when a red box becomes visible on our screen, so it will look something like this:</p>
+
+<blockquote>
+<p>async<em>if is</em>box_visible, &quot;red&quot;</p>
+
+<p>whenever it is true, then do_something</p>
+</blockquote>
+
+<p>Another one, let say, we want to pop up blue box when we see red and green boxes are visible on our screen for the first time, so it will look something like this</p>
+
+<p>async<em>if is</em>box_visible, &quot;red&quot;</p>
+
+<p>async<em>if is</em>box_visible, &quot;green&quot;</p>
+
+<p>whenever both the above are true, then inject blue box</p>
+
+<p>So here we are composing operations which involves some async operations because we do not know when these conditions will be met. This is exactly where Deferred objects shines.</p>
+
+<p>I prepared a demo for the above scenario and rest of the part, I will walk you through some samples. I have shared the entire code in github repository at <a href="https://github.com/droot/async_if">async_if</a>. You can see the demo <a href="http://droot.github.com/async_if/">here</a>.</p>
+
+<p>Async IF Operation: It is a generic construct which takes two arguments:</p>
+
+<ul>
+<li>A function which checks a condition (lets call it checker function henceforth)</li>
+<li>Arguments to be passed to the checker function</li>
+<li>timeout (milliseconds) for reporting failure if condition is not met within timeout milliseconds</li>
+</ul>
+
+<p>Async IF operation returns an object of type <a href="http://wiki.commonjs.org/wiki/Promises/A">Promise</a> which can be used to compose higher level application logic using jquery&#39;s operations around deferred objects. Following javascript code is generated from the coffee script <a href="https://github.com/droot/async_if/blob/master/async_if.coffee">async_if.coffee</a>.</p>
+
+<script src="https://gist.github.com/1917622.js"> </script>
+
+<p>Use of Async IF Operation: In code below, we are trying to build logic which is when red and green box both appears on the screen, inject a blue box on the screen. Now appearance of red and green box is purely async which will happen on user action like &quot;injecting a box&quot; by clicking on buttons in the demo application.</p>
+
+<script src="https://gist.github.com/1917722.js"> </script>
+
+<p>Let me know your thoughts about this construct. Drop a note below or contact me at <a href="http://twitter.com/_sunil_">@<em>sunil</em></a></p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/pycon-india-presentation-on-redis-and-python/">
+        PyCon India Presentation on Redis And Python
+      </a>
+    </h1>
+
+    <span class="post-date">18 Sep 2011</span>
+
+    <p>Pune (India) witnessed probably the second biggest <a href="http://in.pycon.org/2011/">PyCon</a> event this year. It was third PyCon to be held in India and was very successfull event.</p>
+
+<p>I took a comprehensive tutorial on <a href="http://in.pycon.org/2011/talks/71-redis-python">Redis &amp; Python</a> subject. I am embedding the slides from the same session below.</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/9292466" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0"
+scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0;
+margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> 
+
+<p>Hope you will find it useful. Ping me <a href="http://twitter.com/_sunil_">@<em>sunil</em></a> if you have any questions.</p>
+
+  </div>
+  
 </div>
 
 <div class="pagination">
   
-    <span class="pagination-item older">Older</span>
+    <a class="pagination-item older" href="/page2">Older</a>
   
   
     <span class="pagination-item newer">Newer</span>
