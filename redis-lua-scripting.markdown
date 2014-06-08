@@ -26,7 +26,6 @@ I spend sometime today to try out scripting, so thought of doing a quick write u
 I started with simple goal of implementing two new commands zpop and zrevpop for sorted set data type using scripting.
 
 1. ZPOP: This will allow popping out element with lowest score from a sorted set.
-
 2. ZREVPOP: This will allow popping out element with highest score from a sorted set.
 
 ## Setup
@@ -45,7 +44,7 @@ Now you should all the binaries ready in the src folder (redis-server and redis-
 
 Redis implements redis.call interface to invoke redis commands from Lua code. Here is Lua script for zpop command.
 
-{% highlight lua %}
+{% highlight python %}
 val = redis.call('zrange', KEYS[1], 0, 0)
 if val then redis.call('zremrangebyrank', KEYS[1], 0, 0) end
 return val
@@ -86,7 +85,7 @@ On the similar lines, zrevpop can be implemented using following lua script.
 val = redis.call('zrange', KEYS[1], -1, -1)
 if val then redis.call('zremrangebyrank', KEYS[1], -1, -1) end
 return val
-{% enghighlight %}
+{% endhighlight %}
 
 I am going to do a follow up post with some complex examples to demostrate the true potential of Lua scripting.
 
