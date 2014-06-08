@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Highlight Call to Action by giving a small Wiggle"
-date: 2014-08-07 21:20:23
+date: 2010-03-10 21:20:23
 ---
 
 Today, when I was trying out a new application [bufferapp][1], I noticed something very interesting in their interface which immediately caught my attention. Although it is a tiny little detail about the interface, but I think it is one of the very important ones especially in context of a web app, so I thought of writing it down.
@@ -22,31 +22,31 @@ These simple but important details separates a good design from a great design. 
 
 keyframe definition for wiggle effect would look like this: (omitting the browser prefix for better readability)
 
+{% highlight css %}
 @keyframes wiggle {
-
-   0% { transform: rotate(2deg); }
-
-   50% { transform: rotate(-2deg); }
-
-  100% { transform: rotate(2deg); }
-
+  0% { transform: rotate(2deg); }
+  50% { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
 }
+{% endhighlight %}
 
 Think of keyframes directive as defining a animation function which will be called later on elements like buttons in our UI. We implement wiggle function by first rotating the subject by 2 degree anticlockwise, then to 2 degree clockwise and then rotate it back by 2 degree anticlockwise.
 
 Let say our html markup for flash message looks like this:
 
-> <div class="flash_message">
-     Install Now
+{% highlight html %}
+<div class="flash_message">
+  Install Now
 </div>
+{% endhighlight %}
 
 Inorder to invoke it on a mouseover of the flash message block. Our invokation code in CSS would look like this:
 
+{% highlight css %}
 .flash_message:hover a.call_to_action {
-
-  animation: wiggle 0.2s;
-
+  animation: wiggle 0.2s;
 }
+{% endhighlight %}
 
 This is a classic example of applying CSS3 techniques at the experience layer in your application. Let me know what you think of such experiences, drop a note below in the comment section or tweet me [@_sunil_][4] .
 
