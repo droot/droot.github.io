@@ -8,28 +8,26 @@ Its been quite a while since I wrote my last blog post and for a change, this ti
 
 So in today's blog post, I am going to celebrate this feeling of freedom and "TAKE ON THE WORLD" spirit and would like to refresh the thoughts and spirit that these movies carry. The best song to set the theme would be "Pankhon ko..." from Rocket Singh. Its a beautiful song and with so thoughtful lyrics by Jaideep Sahni. Enjoy!!!
 
-{% highlight %}
-Pankhon ko hawa zara si lagne do
-Dil bole soya tha ab jagne do
-Dil dil mein hain dil ki tammana sau
-Do sau hon chalo zara sa tapne do
-Udne do udne do
-Hawa zara si lagne do soya tha ab jagne do
-Pankhon ko hawa zara si lagne do
+> Pankhon ko hawa zara si lagne do
+> Dil bole soya tha ab jagne do
+> Dil dil mein hain dil ki tammana sau
+> Do sau hon chalo zara sa tapne do
+> Udne do udne do
+> Hawa zara si lagne do soya tha ab jagne do
+> Pankhon ko hawa zara si lagne do
 
-Dhoop khili jism garam sa hai
-Suraj yahin yeh bharam sa hai
-Bikhri huyi raahein hazaron sau
-Thaamo koi phir bhatakne do
-Udne do udne do  Dil ki patang chahon mein gotey khaati hai
-Dheel toh do dekho kahan pe jaati hai
-Uljhe nahin toh kaise suljhoge
-Bikhre nahin toh kaise nikhroge
-Udne do udne do
+> Dhoop khili jism garam sa hai
+> Suraj yahin yeh bharam sa hai
+> Bikhri huyi raahein hazaron sau
+> Thaamo koi phir bhatakne do
+> Udne do udne do  Dil ki patang chahon mein gotey khaati hai
+> Dheel toh do dekho kahan pe jaati hai
+> Uljhe nahin toh kaise suljhoge
+> Bikhre nahin toh kaise nikhroge
+> Udne do udne do
 
-{% endhighlight %}
 
-## The first one is "Rocket Singh".
+## The first one is "Rocket Singh"
 
 <iframe width="420" height="315" src="//www.youtube.com/embed/spD7G1uKBLQ" frameborder="0" allowfullscreen></iframe>
 
