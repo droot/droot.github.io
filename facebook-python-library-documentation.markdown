@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Facebook Python Library Documentation - Violet Hill"
-date: 2014-08-07 21:20:23
+date: 2011-01-16 21:20:23
 ---
 
 This weekend , I spent sometime in exploring documentation tools available in python. I think [Sphinx][1] is the best documentation project I have ever come across. [Python Docs][2] itself uses Sphinx for documenting Python.
