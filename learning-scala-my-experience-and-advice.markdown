@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Learning Scala -- my experience and advice"
-date: 2014-08-07 21:20:23
+date: 2013-12-13 21:20:23
 ---
 
 Learning a new programming language has been on my list quite sometime and fortunately, I got a chance to try out Scala for one of the projects at work a month back. So, its been a month learning Scala now. Though its too early to form an opinion about it, but I must say, it has NOT been an easy language to learn so far.  And I think one of the reasons for that is -- the language is way too expressive with pretty much all the constructs in the basket and that makes it a very powerful tool but a difficult one to master. So one advice, don't get disappointed if you feel lost and be patient while you are learning it because it is going to take a bit longer than you expected, so hang in there!!!
@@ -21,6 +21,11 @@ If you like attending video course, then there is a very good course ["Functiona
 
 There are some really useful blog post out there about scala, but a few deserve special mention here.
 
+ - Blog series called [“The Neophyte’s Guide to Scala”][4] by Daniel Westheide
+ - [Scala Documentation][5] 
+ - [Twitter Scala School][6]
+ - [Effective Scala][7]
+
 ### Tooling: 
 
 Eclipse and IntelliJ Idea, both of them, have a good support for scala. In my case, I end up using IntelliJ for my day to day coding, but eclipse has a very good support for Scala worksheet, which I find really handy to try and learn new concepts. For some reason, scala worksheets does not work in IntelliJ Idea. I also use Vim for some quick editing etc and I found vim-scala plugin pretty handy.
@@ -30,3 +35,7 @@ Let me know what has been your experience learning Scala and chime in with links
 [1]: http://www.amazon.com/Scala-Impatient-Cay-S-Horstmann/dp/0321774094/ref=sr_1_1?ie=UTF8&qid=1387653919&sr=8-1&keywords=scala+for+impatient
 [2]: http://www.amazon.com/Programming-Scala-Comprehensive-Step---Step/dp/0981531644/ref=sr_1_1?ie=UTF8&qid=1387654246&sr=8-1&keywords=Programming+in+scala
 [3]: https://www.coursera.org/course/progfun "Link: https://www.coursera.org/course/progfun"
+[4]: http://danielwestheide.com/scala/neophytes.html
+[5]: http://www.scala-lang.org/documentation/
+[6]: http://twitter.github.io/scala_school/
+[7]: http://twitter.github.io/effectivescala/
