@@ -1,4 +1,25 @@
-name: Violet Hill 
-markdown: redcarpet
-pygments: true
-permalink: /:title/
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Violet Hill 
+tagline:          ''
+description:      'A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+url:              http://sunilarora.org
+
+author:
+  name:           'Sunil Arora'
+  url:            https://twitter.com/_sunil_
+
+paginate:         5
+
+# Custom vars
+version:          2.0.0
+
+github:
+  repo:           https://github.com/poole/hyde
