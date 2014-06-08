@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Redis Lua Scripting - Violet Hill"
-date: 2014-08-07 21:20:23
+date: 2011-06-18 21:20:23
 ---
 
 ![][1] [Redis][2] is one of my favorite data storage platform and I won't miss a single chance to use it wherever I can. One of the biggest strengths of Redis has been that you can define your data modelling in the most natural form like key-value/hashes/lists/sets. I prefer thinking of data storage in form of list, hashes, sets instead of tables :).
@@ -25,54 +25,68 @@ I spend sometime today to try out scripting, so thought of doing a quick write u
 
 I started with simple goal of implementing two new commands zpop and zrevpop for sorted set data type using scripting.
 
-1\. ZPOP: This will allow popping out element with lowest score from a sorted set.
+1. ZPOP: This will allow popping out element with lowest score from a sorted set.
 
-2\. ZREVPOP: This will allow popping out element with highest score from a sorted set.
+2. ZREVPOP: This will allow popping out element with highest score from a sorted set.
 
-Setup:
-
+## Setup
 Follow these steps to get scripting version of Redis running on your machine.
 
-> 2\. cd redis
->
-> 3\. git checkout scripting
->
-> 3\. make
+{% highlight bash %}
+git clone https://github.com/antirez/redis.git
+cd redis
+git checkout scripting
+make
+{% endhighlight %}
 
 Now you should all the binaries ready in the src folder (redis-server and redis-cli). Run the server by running redis-server binary.
 
-ZPOP Implementation:
+## ZPOP Implementation
 
 Redis implements redis.call interface to invoke redis commands from Lua code. Here is Lua script for zpop command.
 
-Testing:
+{% highlight lua %}
+val = redis.call('zrange', KEYS[1], 0, 0)
+if val then redis.call('zremrangebyrank', KEYS[1], 0, 0) end
+return val
+{% endhighlight %}
+
+## Testing
 
 Redis server implements new command "eval" to invoke lua scripts. Quick syntax goes like this:
 
-
-    EVAL <body> <num_keys_in_args> [<arg1> <arg2> ... <arg_N>]
+{% highlight bash %}
+EVAL <body> <num_keys_in_args> [<arg1> <arg2> ... <arg_N>]
+{% endhighlight %}
 
 You can test your lua script using redis-cli program. 
 
 Lets populate sorted set named zset by inserting a, b, c with scores values 1, 2 and 3 respectively.
 
-> ./redis-cli zadd zset 1 a
->
-> ./redis-cli zadd zset 2 b
->
-> ./redis-cli zadd zset 3 c
+{% highlight bash %}
+./redis-cli zadd zset 1 a
+./redis-cli zadd zset 2 b
+./redis-cli zadd zset 3 c
+{% endhighlight %}
 
 Here is command to test zpop.lua file. You should see 
 
-> ./redis-cli -p 10000 eval "$(cat path-to-zpop.lua-file)" 1 zset
->
-> 1) "a"
->
-> ./redis-cli -p 10000 eval "$(cat path-to-zpop.lua-file)" 1 zset
->
-> 1) "b"
+{% highlight bash %}
+
+./redis-cli -p 10000 eval "$(cat path-to-zpop.lua-file)" 1 zset
+1) "a"
+./redis-cli -p 10000 eval "$(cat path-to-zpop.lua-file)" 1 zset
+1) "b"
+
+{% endhighlight %}
 
 On the similar lines, zrevpop can be implemented using following lua script.
+
+{% highlight lua %}
+val = redis.call('zrange', KEYS[1], -1, -1)
+if val then redis.call('zremrangebyrank', KEYS[1], -1, -1) end
+return val
+{% enghighlight %}
 
 I am going to do a follow up post with some complex examples to demostrate the true potential of Lua scripting.
 
