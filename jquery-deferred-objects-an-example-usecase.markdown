@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Asynchronous IF implementation using JQuery Deferred Objects"
-date: 2014-08-07 21:20:23
+date: 2012-02-25 21:20:23
 ---
 
 I ran in to a situation in a project recently where I got an opportunity to use [JQuery Deferred Objects][1]. I wanted to implement an Async IF operation. Async IF operation is like watching a condition to become true (may be in future) and then invoking something when it becomes true. So this is essentially an "if" operation in async mode and your logic might involve watching more than one condition to be met.
@@ -36,7 +36,11 @@ Async IF Operation: It is a generic construct which takes two arguments:
 
 Async IF operation returns an object of type [Promise][4] which can be used to compose higher level application logic using jquery's operations around deferred objects. Following javascript code is generated from the coffee script [async_if.coffee][5].
 
+{% gist 1917622 %}
+
 Use of Async IF Operation: In code below, we are trying to build logic which is when red and green box both appears on the screen, inject a blue box on the screen. Now appearance of red and green box is purely async which will happen on user action like "injecting a box" by clicking on buttons in the demo application.
+
+{% gist 1917722 %}
 
 Let me know your thoughts about this construct. Drop a note below or contact me at [@_sunil_][6]
 
