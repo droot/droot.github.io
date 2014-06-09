@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Highlight Call to Action by giving a small Wiggle"
-date: 2010-03-10 21:20:23
+date: 2013-03-10 21:20:23
 ---
 
 Today, when I was trying out a new application [bufferapp][1], I noticed something very interesting in their interface which immediately caught my attention. Although it is a tiny little detail about the interface, but I think it is one of the very important ones especially in context of a web app, so I thought of writing it down.
