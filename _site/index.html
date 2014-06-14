@@ -100,6 +100,58 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/newrelic-default-conf-drags-play-app-performance/">
+        NewRelic's default conf drags Play Scala app 
+      </a>
+    </h1>
+
+    <span class="post-date">14 Jun 2014</span>
+
+    <p>Last week I learned about an important tweak in NewRelic configuration to avoid performance issues with Play Scala webframework.</p>
+
+<p>While benchmarking our play-scala app I was surprised to see poor performance numbers given that play framework claims to be one of high performant web frameworks around.
+App wasn&#39;t able to serve more than 200~230 requests per seconds for a simple DB lookup operation. Some serious digging revealed that default configuration of NewRelic for Play framework adds serious drag to the app&#39;s performance.</p>
+
+<p>I contacted folks at NewRelic and they were quick to respond. Here is what I learned from them about the instrumentation: </p>
+
+<blockquote>
+<p>In order to properly track async activity, we instrument Scala promises and
+futures. Unfortunately naming the tracers using these classes are not helpful
+at all. In effort to improve trace segment naming, I take a Thread.stacktrace
+and navigate up the stack to find a useful caller and name based on that. The
+call to Thread.stacktrace can be relatively expensive and result in
+significant overhead. The setting we suggested disables this functionality and
+has reduced overhead significantly for several other customers.</p>
+</blockquote>
+
+<p>So, all you need to do is to turn off <em>stack<em>based</em>naming</em> in your newrelic.yml. Remember to put this configuration under transaction_tracer section.</p>
+
+<div class="highlight"><pre><code class="python">  <span class="n">transaction_tracer</span><span class="p">:</span>
+      <span class="n">stack_based_naming</span><span class="p">:</span> <span class="n">false</span>
+</code></pre></div>
+
+<p>Here is a side by side comparison of running Apache Benchmark (ab) with 10K requests with concurrency of 10 with/without the configuration tweak.</p>
+
+<p><img src="/public/new_relic_play_configuration_tweak.png" ></p>
+
+<p>You can see the difference in throughput <em>1300 requests per second</em> vs <em>220 requests per second</em>.</p>
+
+<p>NewRelic should turn off <em>stack<em>based</em>naming</em> setting by default. </p>
+
+<p>Hope you find this tip helpful. If I had known about it, it would have saved me couple of days :).</p>
+
+<p>If you liked this post, you can
+<a href="https://twitter.com/intent/tweet?url=http://sunilarora.org/newrelic-default-conf-drags-play-app-performance/&text=NewRelic's default conf drags Play Scala app &via=sunilarora.org"
+    target="_blank">
+    share it with your followers</a>
+or
+<a href="https://twitter.com/_sunil_">
+    follow me on Twitter</a>!</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/scala-future-concurrent-download-example/">
         Scala Concurrent Downloader example using Future
       </a>
@@ -300,61 +352,6 @@ frameborder="0" allowfullscreen></iframe>
 </code></pre></div>
 
 <p>This is a classic example of applying CSS3 techniques at the experience layer in your application. Let me know what you think of such experiences, drop a note below in the comment section or tweet me <a href="http://twitter.com/_sunil_">@<em>sunil</em></a> .</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/jquery-deferred-objects-an-example-usecase/">
-        Asynchronous IF implementation using JQuery Deferred Objects
-      </a>
-    </h1>
-
-    <span class="post-date">25 Feb 2012</span>
-
-    <p>I ran in to a situation in a project recently where I got an opportunity to use <a href="http://api.jquery.com/category/deferred-object/">JQuery Deferred Objects</a>. I wanted to implement an Async IF operation. Async IF operation is like watching a condition to become true (may be in future) and then invoking something when it becomes true. So this is essentially an &quot;if&quot; operation in async mode and your logic might involve watching more than one condition to be met.</p>
-
-<p>For example:</p>
-
-<p>Consider a <a href="http://droot.github.com/async_if/">demo web application</a> where colored boxes (red or green) can appear on the screen depending on some logic or user action. We want to do certain things if a red box appears or a green box appears or both of them appears.</p>
-
-<p>Let say we we want to do something when a red box becomes visible on our screen, so it will look something like this:</p>
-
-<blockquote>
-<p>async<em>if is</em>box_visible, &quot;red&quot;</p>
-
-<p>whenever it is true, then do_something</p>
-</blockquote>
-
-<p>Another one, let say, we want to pop up blue box when we see red and green boxes are visible on our screen for the first time, so it will look something like this</p>
-
-<p>async<em>if is</em>box_visible, &quot;red&quot;</p>
-
-<p>async<em>if is</em>box_visible, &quot;green&quot;</p>
-
-<p>whenever both the above are true, then inject blue box</p>
-
-<p>So here we are composing operations which involves some async operations because we do not know when these conditions will be met. This is exactly where Deferred objects shines.</p>
-
-<p>I prepared a demo for the above scenario and rest of the part, I will walk you through some samples. I have shared the entire code in github repository at <a href="https://github.com/droot/async_if">async_if</a>. You can see the demo <a href="http://droot.github.com/async_if/">here</a>.</p>
-
-<p>Async IF Operation: It is a generic construct which takes two arguments:</p>
-
-<ul>
-<li>A function which checks a condition (lets call it checker function henceforth)</li>
-<li>Arguments to be passed to the checker function</li>
-<li>timeout (milliseconds) for reporting failure if condition is not met within timeout milliseconds</li>
-</ul>
-
-<p>Async IF operation returns an object of type <a href="http://wiki.commonjs.org/wiki/Promises/A">Promise</a> which can be used to compose higher level application logic using jquery&#39;s operations around deferred objects. Following javascript code is generated from the coffee script <a href="https://github.com/droot/async_if/blob/master/async_if.coffee">async_if.coffee</a>.</p>
-
-<script src="https://gist.github.com/1917622.js"> </script>
-
-<p>Use of Async IF Operation: In code below, we are trying to build logic which is when red and green box both appears on the screen, inject a blue box on the screen. Now appearance of red and green box is purely async which will happen on user action like &quot;injecting a box&quot; by clicking on buttons in the demo application.</p>
-
-<script src="https://gist.github.com/1917722.js"> </script>
-
-<p>Let me know your thoughts about this construct. Drop a note below or contact me at <a href="http://twitter.com/_sunil_">@<em>sunil</em></a></p>
 
   </div>
   
