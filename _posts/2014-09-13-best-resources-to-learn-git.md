@@ -14,7 +14,7 @@ As he puts it
 > you can only really use Git if you understand how Git works.
 >
 
-Now go read it [here](http://www.sbf5.com/~cduan/technical/git/)
+Now go read it [here](http://www.sbf5.com/~cduan/technical/git/).
 
 Thank you Charles for such a nice write up!
 
