@@ -100,6 +100,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/best-resources-to-learn-git/">
+        Developer tip - Best resources to learn Git 
+      </a>
+    </h1>
+
+    <span class="post-date">13 Sep 2014</span>
+
+    <p>This post is more of a developer tip.</p>
+
+<p><a href="http://sbf5.com/%7Ecduan/">Charles Duan</a> has written one of the best description of Git data model and Git commands explaining how they manipulate the data model under the hood.</p>
+
+<p>As he puts it</p>
+
+<blockquote>
+<p>you can only really use Git if you understand how Git works.</p>
+</blockquote>
+
+<p>Now go read it <a href="http://www.sbf5.com/%7Ecduan/technical/git/">here</a></p>
+
+<p>Thank you Charles for such a nice write up!</p>
+
+<p>If you liked this post, you can
+<a href="https://twitter.com/intent/tweet?url=http://sunilarora.org/best-resources-to-learn-git/&text=Developer tip - Best resources to learn Git &via=sunilarora.org"
+    target="_blank">
+    share it with your followers</a>
+or
+<a href="https://twitter.com/_sunil_">
+    follow me on Twitter</a>!</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/newrelic-default-conf-drags-play-app-performance/">
         NewRelic's default conf drags Play Scala app 
       </a>
@@ -126,9 +159,8 @@ has reduced overhead significantly for several other customers.</p>
 
 <p>So, all you need to do is to turn off <em>stack<em>based</em>naming</em> in your newrelic.yml. Remember to put this configuration under transaction_tracer section.</p>
 
-<div class="highlight"><pre><code class="python">  <span class="n">transaction_tracer</span><span class="p">:</span>
-      <span class="n">stack_based_naming</span><span class="p">:</span> <span class="n">false</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">transaction_tracer</span><span class="p">:</span>
+      <span class="n">stack_based_naming</span><span class="p">:</span> <span class="n">false</span></code></pre></div>
 
 <p>Here is a side by side comparison of running Apache Benchmark (ab) with 10K requests with concurrency of 10 with/without the configuration tweak.</p>
 
@@ -170,7 +202,7 @@ below are the best written introductory posts about scala futures and promises.<
 <p>In order to learn it for real, I started with an exercise of building a concurrent URL downloader.
 Basically idea is, let say, given n urls, how do you download n urls concurrently. </p>
 
-<div class="highlight"><pre><code class="scala"><span class="k">import</span> <span class="nn">play.api.libs.ws._</span> <span class="c1">//We are using WebService Client from Play&#39;s framework</span>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">play.api.libs.ws._</span> <span class="c1">//We are using WebService Client from Play&#39;s framework</span>
 <span class="k">import</span> <span class="nn">scala.concurrent._</span>
 <span class="k">import</span> <span class="nn">java.util.concurrent.Executors</span>
 <span class="k">import</span> <span class="nn">scala.util.</span><span class="o">{</span><span class="nc">Success</span><span class="o">,</span> <span class="nc">Failure</span><span class="o">,</span> <span class="nc">Try</span><span class="o">}</span>
@@ -230,8 +262,7 @@ Basically idea is, let say, given n urls, how do you download n urls concurrentl
           <span class="o">}</span>
       <span class="o">}</span>
     <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
+<span class="o">}</span></code></pre></div>
 
 <p>There you go, you have a nice little concurrent URL downloader. I am so glad to
 write a concurrent program without involving any threads, locks, shared data
@@ -296,62 +327,6 @@ structures, feels so refreshing!</p>
 frameborder="0" allowfullscreen></iframe>
 
 <p>I would highly recommend it to anyone to add it to his toolkit if you are dealing with complex data workflows in your project. Have a look and let me know what you think!!!</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/wiggle-effect-a-simple-use-case-of-css3-anima/">
-        Highlight Call to Action by giving a small Wiggle
-      </a>
-    </h1>
-
-    <span class="post-date">10 Mar 2013</span>
-
-    <p>Today, when I was trying out a new application <a href="http://bufferapp.com/">bufferapp</a>, I noticed something very interesting in their interface which immediately caught my attention. Although it is a tiny little detail about the interface, but I think it is one of the very important ones especially in context of a web app, so I thought of writing it down.</p>
-
-<p>If you have used bufferapp, you will notice following things (shown in the picture below):</p>
-
-<ul>
-<li>High level navigation at the top (header section).</li>
-<li>Notification with some call to action right beneath the header section (in this case Install Chrome extension)</li>
-<li>Main content section which is about buffering your tweets. </li>
-</ul>
-
-<p><img src="https://phaven-prod.s3.amazonaws.com/files/image_part/asset/29299/SJdP9iq-WbjZoN04vhLbZQDvDsU/medium_Wiggle_Example.jpg" alt=""></p>
-
-<p>The detail that I wanted to point out was, when I am navigating from bottom section to the header section, I would see &quot;install&quot; button wiggles for a moment. Now that momentary wiggle made me pay attention and read that message to understand install what ?  It felt exactly like as if you are navigating through your office corridor and someone calls you out to show you something. So this &quot;wiggle for .2 seconds&quot; was almost like someone calling out to make sure I read that message. You can see this in action <a href="http://droot.github.com/wiggle/">here</a> in modern browsers specifically Chrome, Safari or Firefox.</p>
-
-<p>You will see this layout pattern in lot of places where application is trying to communicate something important to the user and would like him/her to take an action like in this case Buffer wanted me to install their chrome extension as I was using Google Chrome. Typically, users develop a blind eye to some of these layout patterns and it becomes very challenging for the interface designer to craft an experience which could draw user&#39;s attention to an important action.</p>
-
-<p>These simple but important details separates a good design from a great design. In rest part of the post, I would throw some light on implementation details for this wiggle effect. Most of the modern browsers support animation through CSS3 these days.</p>
-
-<p>keyframe definition for wiggle effect would look like this: (omitting the browser prefix for better readability)</p>
-
-<div class="highlight"><pre><code class="css"><span class="k">@keyframes</span> <span class="nt">wiggle</span> <span class="p">{</span>
-  <span class="nt">0</span><span class="o">%</span> <span class="p">{</span> <span class="n">transform</span><span class="o">:</span> <span class="n">rotate</span><span class="p">(</span><span class="m">2</span><span class="n">deg</span><span class="p">);</span> <span class="p">}</span>
-  <span class="nt">50</span><span class="o">%</span> <span class="p">{</span> <span class="n">transform</span><span class="o">:</span> <span class="n">rotate</span><span class="p">(</span><span class="m">-2</span><span class="n">deg</span><span class="p">);</span> <span class="p">}</span>
-  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="n">transform</span><span class="o">:</span> <span class="n">rotate</span><span class="p">(</span><span class="m">2</span><span class="n">deg</span><span class="p">);</span> <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Think of keyframes directive as defining a animation function which will be called later on elements like buttons in our UI. We implement wiggle function by first rotating the subject by 2 degree anticlockwise, then to 2 degree clockwise and then rotate it back by 2 degree anticlockwise.</p>
-
-<p>Let say our html markup for flash message looks like this:</p>
-
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;flash_message&quot;</span><span class="nt">&gt;</span>
-  Install Now
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
-
-<p>Inorder to invoke it on a mouseover of the flash message block. Our invokation code in CSS would look like this:</p>
-
-<div class="highlight"><pre><code class="css"><span class="nc">.flash_message</span><span class="nd">:hover</span> <span class="nt">a</span><span class="nc">.call_to_action</span> <span class="p">{</span>
-  <span class="n">animation</span><span class="o">:</span> <span class="n">wiggle</span> <span class="m">0.2s</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>This is a classic example of applying CSS3 techniques at the experience layer in your application. Let me know what you think of such experiences, drop a note below in the comment section or tweet me <a href="http://twitter.com/_sunil_">@<em>sunil</em></a> .</p>
 
   </div>
   
