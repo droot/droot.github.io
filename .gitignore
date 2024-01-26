@@ -1,2 +1,3 @@
 _site/
 .sass-cache/
+.hugo_build.lock
