@@ -1,3 +1,8 @@
+---
+layout: default
+title: Home
+---
+
 # About Me
 
 I am a software engineer at Google. I work on the GKE team at Google Cloud.
