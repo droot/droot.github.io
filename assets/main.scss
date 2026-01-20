@@ -44,8 +44,8 @@ a:hover {
 
 // Remove borders/backgrounds to ensure "no ribbon" look
 .site-header {
-  border-top: none;
-  border-bottom: none;
+  border-top: none !important;
+    border-bottom: none !important;
   background-color: transparent;
   min-height: 60px;
 }
