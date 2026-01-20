@@ -1,23 +1,26 @@
---- --- // Override Minima variables
-$base-font-family: "Georgia", "Times New Roman", serif !default;
+--- --- @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+// Override Minima variables
+$base-font-family: 'Roboto', sans-serif !default;
 $base-font-size: 18px !default;
-$base-font-weight: 400 !default;
+$base-font-weight: 300 !default;
 $small-font-size: 16px !default;
 $base-line-height: 1.6 !default;
 
 $text-color: #111 !default;
-$background-color: #fdfdfd !default;
+$background-color: #fff !default;
 $brand-color: #2a7ae2 !default;
 
-$grey-color: #828282 !default;
+$grey-color: #facfade !default;
 $grey-color-light: lighten($grey-color, 40%) !default;
 $grey-color-dark: darken($grey-color, 25%) !default;
 
 @import "minima";
 
-// Custom CSS rules (if any variables didn't catch)
+// Custom CSS rules
 body {
   font-family: $base-font-family;
+  font-weight: 300;
 }
 
 h1,
@@ -27,22 +30,29 @@ h4,
 h5,
 h6 {
   font-family: $base-font-family;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 a {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
+    color: $brand-color;
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
+// Remove borders/backgrounds to ensure "no ribbon" look
+.site-header {
+  border-top: none;
+  border-bottom: none;
+  background-color: transparent;
+  min-height: 60px;
+}
 
 .site-title {
   font-family: var(--base-font-family);
-  font-weight: bold;
+  font-weight: 300;
 }
 
 .site-nav .page-link {
