@@ -47,6 +47,25 @@ Archive entries must not set `layout:` in their own front matter — the
 per-file `layout:` silently overrides it and drops the "From the archive"
 banner.
 
+## Design
+
+Palette is "Ink": no accent hue. Links are the same near-black as body text and
+are marked by an **underline**, so the underline is load-bearing — don't
+"clean it up". The single hue, `$ink-slate` `#3e5c76`, is reserved for literal
+values in code.
+
+Type is tuned for reading a long post: Roboto at **wght 350** (Light read thin
+at length, Regular too dense), 19px/1.75, and a **34em measure** (~68
+characters). `$content-width` is that measure plus minima's gutters, so the nav
+aligns with the text column. Sizes in post bodies are **em-relative** — a `rem`
+value here ignores the base size, which is how post text ended up smaller than
+the rest of the site once before.
+
+`_includes/header.html` and `_layouts/{home,page}.html` override minima's
+originals. Nav comes from `site.nav` in `_config.yml`, not page titles, so a nav
+label is independent of the `<title>` tag; the current page renders as a
+`<span>` rather than a self-link.
+
 ## Gotchas
 
 **`assets/main.scss` needs its `---` front-matter delimiters on their own
@@ -64,6 +83,17 @@ as a backup of the pre-2015 history. Never develop on it.
 **Old posts came from Hugo**, so watch for `{{< gist >}}`, `{{< youtube >}}`,
 and `{{< slideshare >}}` shortcodes. Jekyll renders those as raw text and warns.
 `make check` catches them.
+
+**Minima's code styling fights you on specificity, not source order.** It paints
+`.highlighter-rouge .highlight` (0,2,0) and `pre, code` together, and rouge emits
+`div.highlighter-rouge > div.highlight > pre.highlight > code`. A bare
+`.highlight` override loses, and the inner `<code>` paints its own slab on top.
+Overrides must match those selectors exactly. After changing code styling, check
+the resolved value rather than trusting that your rule came last.
+
+**Check syntax colours against Go, not YAML.** Go is ~40% plain identifiers
+(`.n`) and emits almost no `.na`, so a theme that looks fine on YAML keys can
+render Go as one flat wall of colour.
 
 ## Deploying
 

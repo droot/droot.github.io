@@ -3,6 +3,14 @@ layout: default
 ---
 <article class="post">
 
+  {%- comment -%}
+  `heading` is separate from `title` on purpose: `title` drives the nav label
+  and the <title> tag, this only drives the visible heading on the page.
+  {%- endcomment -%}
+  {%- if page.heading -%}
+    <h1 class="page-heading">{{ page.heading | escape }}</h1>
+  {%- endif -%}
+
   <div class="post-content">
     {{ content }}
   </div>

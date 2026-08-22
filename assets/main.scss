@@ -1,29 +1,59 @@
 ---
 ---
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+// Roboto is a variable font (wght 100-900), so 350 costs no extra request --
+// the browser fetches one file and interpolates. Roboto Mono pairs with it for
+// code. Italics are requested for <em> and code comments.
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300..700;1,300..500&family=Roboto+Mono:wght@400;500&display=swap');
 
-// Override Minima variables
+// ---------------------------------------------------------------------------
+// Palette: "Ink"
+//
+// No accent hue. Links are the same near-black as body text and are marked by
+// an underline instead of colour, so the only chromatic note on the page is
+// $ink-slate, used for literal values in code. Because links carry no colour,
+// the underline is load-bearing -- don't remove it.
+// ---------------------------------------------------------------------------
+$ink:         #16181d; // body text, links, keywords
+$ink-soft:    #3d434c; // plain identifiers in code -- see note in the code block
+$ink-muted:   #767b85; // datelines, current nav item, captions
+$ink-rule:    #e6e8eb; // hairlines, code block borders
+$ink-slate:   #3e5c76; // the one hue: strings and numbers in code
+$ink-comment: #8a9099; // code comments
+$ink-code-bg: #f7f8f9; // code background
+
+// ---------------------------------------------------------------------------
+// Type
+//
+// Tuned for reading a long post rather than scanning a landing page:
+//   wght 350   -- Light was too thin at length, Regular too dense
+//   19px/1.75  -- more leading than minima's default to suit the measure
+//   34em       -- ~68 characters per line; 800px was giving ~78, which is past
+//                 the point where the eye starts losing its place on the return
+// $content-width is the measure plus minima's 30px gutters on each side.
+// ---------------------------------------------------------------------------
 $base-font-family: 'Roboto', sans-serif !default;
-$base-font-size: 18px !default;
-$base-font-weight: 300 !default;
-$small-font-size: 16px !default;
-$base-line-height: 1.6 !default;
+$code-font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace !default;
+$base-font-size: 19px !default;
+$base-font-weight: 350 !default;
+$small-font-size: 15px !default;
+$base-line-height: 1.75 !default;
+$content-width: 706px !default;
 
-$text-color: #111 !default;
-$background-color: #fff !default;
-$brand-color: #2a7ae2 !default;
+$text-color: $ink !default;
+$background-color: #ffffff !default;
+$brand-color: $ink !default;
 
-$grey-color: #828282 !default;
-$grey-color-light: lighten($grey-color, 40%) !default;
-$grey-color-dark: darken($grey-color, 25%) !default;
+$grey-color: $ink-muted !default;
+$grey-color-light: $ink-rule !default;
+$grey-color-dark: darken($ink-muted, 20%) !default;
 
 @import "minima";
 
 // Custom CSS rules
 body {
   font-family: $base-font-family;
-  font-weight: 300;
+  font-weight: 350;
 }
 
 h1,
@@ -33,16 +63,21 @@ h4,
 h5,
 h6 {
   font-family: $base-font-family;
-  font-weight: 400;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
+// Links carry no colour, so the underline is the only affordance.
 a {
-  text-decoration: none;
-  color: $brand-color;
+  color: $text-color;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba($ink, 0.35);
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 // Remove borders/backgrounds to ensure "no ribbon" look
@@ -53,16 +88,181 @@ a:hover {
   min-height: 60px;
 }
 
-.site-title {
-  font-family: $base-font-family;
-  font-weight: 300;
-}
-
+// Nav is chrome, not prose: no underline until hover.
 .site-nav .page-link {
-  color: #333;
+  color: $text-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: rgba($ink, 0.35);
+  }
 }
 
+// The nav entry for the page you're already on: present for orientation,
+// but not a link.
+.site-nav .page-link.is-current {
+  color: $ink-muted;
+  cursor: default;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Post body. Sizes are em-relative so the whole article scales from the base
+// above; a rem-based override here would ignore it. Headings take much more
+// space above than below, so a section binds to its own text.
 .post-content {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  p,
+  ul,
+  ol {
+    margin-bottom: 1.15em;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+  }
+
+  h2 { font-size: 1.35em; }
+  h3 { font-size: 1.15em; }
+  h4 { font-size: 1em; }
+}
+
+// Post title on a single post page, and the name at the top of /about/.
+.post-title,
+.page-heading {
+  font-size: 1.9em;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5em;
+}
+
+// Home page post list: title first, tiny dateline underneath
+.post-list {
+  > li {
+    margin-bottom: 1.75rem;
+  }
+
+  .post-title {
+    margin-bottom: 0.1em;
+    font-size: 1.25em;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.3;
+  }
+
+  .post-link {
+    display: inline;
+  }
+}
+
+.post-byline {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: $ink-muted;
+}
+
+// ---------------------------------------------------------------------------
+// Code
+//
+// Replaces minima's syntax theme (a GitHub-circa-2012 scheme with #d14 strings
+// and #099 keywords) which was never chosen and clashes with the palette above.
+// Structure comes from weight and italics; $ink-slate marks literal values.
+// ---------------------------------------------------------------------------
+// kramdown + rouge emit a nest of wrappers:
+//   div.highlighter-rouge > div.highlight > pre.highlight > code
+// minima paints `.highlighter-rouge .highlight` (specificity 0,2,0) #eef and
+// `pre, code` #eef too, so a bare `.highlight` override loses on specificity
+// and the inner <code> ends up painting its own pale slab -- indentation
+// included -- on top of a blue block. Both are handled here.
+
+// Inline code in prose keeps its box. Mono runs large next to Roboto at the
+// same nominal size, hence the sub-1em sizing on both.
+code {
+  font-family: $code-font-family;
+  font-size: 0.84em;
+  font-weight: 400;
+  background-color: $ink-code-bg;
+  border: 1px solid $ink-rule;
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: $ink;
+}
+
+// A code block is one box, drawn by <pre>.
+pre {
+  font-family: $code-font-family;
+  font-size: 0.8em;
+  font-weight: 400;
+  line-height: 1.65;
+  background-color: $ink-code-bg;
+  border: 1px solid $ink-rule;
+  border-radius: 3px;
+  color: $ink;
+}
+
+// Inside a block, <code> must not paint anything of its own.
+pre code,
+.highlight code,
+.highlighter-rouge code {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 1em; // otherwise 0.84em compounds on the <pre>'s 0.8em
+}
+
+blockquote {
+  color: $ink-muted;
+  border-left-color: $ink-rule;
+}
+
+// Both selectors, so this matches minima's specificity instead of relying on
+// source order alone.
+.highlight,
+.highlighter-rouge .highlight {
+  background: $ink-code-bg;
+
+  // comments
+  .c, .ch, .cd, .cm, .cp, .cpf, .c1, .cs { color: $ink-comment; font-style: italic; }
+
+  // keywords
+  .k, .kc, .kd, .kn, .kp, .kr, .kt, .kv { color: $ink; font-weight: 700; }
+
+  // strings
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: $ink-slate; }
+
+  // numbers
+  .m, .mb, .mf, .mh, .mi, .mo, .mx, .il { color: $ink-slate; }
+
+  // Names, in three tiers. Go is ~40% plain identifiers (`.n`) and has almost
+  // no `.na`, so with a single tone it reads as an undifferentiated wall. The
+  // tiers give it structure without introducing a second hue:
+  //   declarations and keys  -> full ink, weight 500
+  //   plain identifiers      -> softened, so keywords and literals stand out
+  .na, .nt, .nf, .nc, .nn, .no, .nb, .bp, .ne, .nd { color: $ink; font-weight: 500; }
+  .n, .nx, .nl, .ni, .nv, .vc, .vg, .vi, .py { color: $ink-soft; font-weight: 400; }
+
+  // Operators and punctuation. `.pi` is YAML's `-` and `:`; rouge emits it and
+  // minima never styled it, so it defaulted to full-strength ink. The weight
+  // reset undoes minima's `bold` on operators.
+  .o, .ow, .p, .pi { color: $ink-muted; font-weight: 400; }
+
+  // diffs and generic output
+  .gd { color: #8a3b3b; background-color: #fbf0f0; }
+  .gi { color: #3e6b4f; background-color: #eef5f0; }
+  .gh, .gu { color: $ink-muted; font-weight: 700; }
+  .ge { font-style: italic; }
+  .gs { font-weight: 700; }
+  .err { color: #8a3b3b; background-color: transparent; }
 }

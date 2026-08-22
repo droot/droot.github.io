@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+heading: Sunil Arora
 permalink: /about/
 ---
 

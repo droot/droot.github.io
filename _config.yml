@@ -3,8 +3,14 @@ description: Software Engineer at Google | Kubernetes, GKE, AI
 theme: minima
 show_downloads: false
 
-header_pages:
-  - about.md
+# Header navigation. Defined here rather than derived from page titles, so the
+# nav label is independent of a page's `title` (which drives the <title> tag).
+# The entry matching the current page renders as plain text, not a link.
+nav:
+  - title: Posts
+    url: /
+  - title: About
+    url: /about/
 
 # Older posts (2009-2014). Kept in the repo but not published: `output: false`
 # stops the individual pages being generated, and archive.html is marked
