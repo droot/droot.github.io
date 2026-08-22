@@ -31,12 +31,16 @@ Jekyll; the Makefile puts Homebrew's Ruby on PATH. The `Gemfile` pins Jekyll
 - `_drafts/` — unpublished. Safe to commit; Jekyll won't build them without
   `--drafts`.
 
-To publish the archive at `/archive/`, flip both switches — either one alone
+To publish the archive at `/archive/`, all of these are needed — any one alone
 leaves it broken or half-visible:
 
 1. `collections.archive.output: true` in `_config.yml`
 2. remove `published: false` from `archive.html`
 3. add `archive.html` back to `header_pages` for the nav link
+4. restore the archive styles, which were stripped to keep the shipped CSS
+   minimal: `git show a86b0c6:assets/main.scss` has `.archive-year`,
+   `.archive-list`, `.archive-notice`, and the `.video-embed` / `.slide-embed`
+   iframe wrappers
 
 Archive entries must not set `layout:` in their own front matter — the
 `archived` layout is applied by the `defaults:` block in `_config.yml`, and a
