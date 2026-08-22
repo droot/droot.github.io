@@ -20,3 +20,15 @@ defaults:
       type: archive
     values:
       layout: archived
+
+# Setting `exclude` replaces Jekyll's defaults, so the usual entries are
+# repeated here alongside the local tooling files.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Makefile
+  - AGENTS.md
+  - CLAUDE.md
+  - vendor
+  - .bundle
+  - node_modules
