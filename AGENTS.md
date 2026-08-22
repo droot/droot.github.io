@@ -25,11 +25,18 @@ Jekyll; the Makefile puts Homebrew's Ruby on PATH. The `Gemfile` pins Jekyll
 
 - `_posts/` — current writing. Appears in the home feed. Filenames need a
   `YYYY-MM-DD-` prefix.
-- `_archive/` — 23 recovered posts from 2009–2014, listed only at `/archive/`
-  and deliberately **kept out of the home feed**. Don't move these into
+- `_archive/` — 23 recovered posts from 2009–2014. **Not published.** The files
+  are kept in the repo but nothing is built from them. Don't move these into
   `_posts/`. No date prefix; the date comes from front matter.
 - `_drafts/` — unpublished. Safe to commit; Jekyll won't build them without
   `--drafts`.
+
+To publish the archive at `/archive/`, flip both switches — either one alone
+leaves it broken or half-visible:
+
+1. `collections.archive.output: true` in `_config.yml`
+2. remove `published: false` from `archive.html`
+3. add `archive.html` back to `header_pages` for the nav link
 
 Archive entries must not set `layout:` in their own front matter — the
 `archived` layout is applied by the `defaults:` block in `_config.yml`, and a
