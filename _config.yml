@@ -2,3 +2,21 @@ title: Sunil Arora
 description: Software Engineer at Google | Kubernetes, GKE, AI
 theme: minima
 show_downloads: false
+
+header_pages:
+  - about.md
+  - archive.html
+
+# Older posts (2009-2014) live in their own collection so they stay out of the
+# main feed on the home page.
+collections:
+  archive:
+    output: true
+    permalink: /archive/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: archive
+    values:
+      layout: archived

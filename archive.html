@@ -1,0 +1,23 @@
+---
+layout: page
+title: Archive
+permalink: /archive/
+---
+
+<p>
+  Posts from an earlier incarnation of this blog, written between 2009 and 2014.
+  They're kept here as-is; most of the technical details have aged.
+</p>
+
+{% assign by_year = site.archive | sort: "date" | reverse | group_by_exp: "post", "post.date | date: '%Y'" %}
+{% for year in by_year %}
+<h2 class="archive-year">{{ year.name }}</h2>
+<ul class="archive-list">
+  {% for post in year.items %}
+  <li>
+    <span class="archive-date">{{ post.date | date: "%b %-d" }}</span>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}
